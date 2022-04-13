@@ -49,7 +49,7 @@ namespace AssetManagementFramework
         {
             HTMLReporter.createNode(TestContext.CurrentContext.Test.ClassName, TestContext.CurrentContext.Test.Name, "test class description here");
             driver = WebDriverCreator.CreateLocalDriver(_browser);
-            driver.Url = "http://automationpractice.com/index.php";
+            driver.Url = "https://group5reactjs.azurewebsites.net/";
         }
 
         [TearDown]

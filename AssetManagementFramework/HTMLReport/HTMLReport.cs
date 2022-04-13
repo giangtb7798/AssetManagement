@@ -30,7 +30,7 @@ namespace AssetManagementFramework.HTMLReport
         private static ExtentReports createInstance(string path)
         {
             ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(path);
-            htmlReporter.Config.DocumentTitle = "HoangQuyDao-Exercise";
+            htmlReporter.Config.DocumentTitle = "NguyenTruongGiang_Project";
             htmlReporter.Config.ReportName = "Automation-Report";
             htmlReporter.Config.Theme = Theme.Standard;
             htmlReporter.Config.Encoding = "UTF-8";
