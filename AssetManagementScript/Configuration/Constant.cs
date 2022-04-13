@@ -12,7 +12,7 @@ namespace AssetManagementScript.Configuration
 
         public static readonly string Password = "Admin";
 
-        public static readonly string API_URL = "https://rookiesgroup5.azurewebsites.net/s";
+        public static readonly string API_URL = "https://rookiesgroup5.azurewebsites.net/";
 
     }
 }
