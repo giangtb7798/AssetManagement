@@ -61,7 +61,7 @@ namespace AssetManagementFramework
                 TakeScreenShoot.CaptureScreenshotAndReturnModel(NewPath);
                 HTMLReporter.Fail("Test case: " + TestContext.CurrentContext.Test.Name + " is failed", NewPath);
             }
-            driver.Quit();
+            //driver.Quit();
         }
 
         [OneTimeTearDown]

@@ -15,7 +15,9 @@ namespace AssetManagementScript.PageObject
         By Old_Password = By.XPath("//input[@name='oldPassword']");
         By New_Password = By.XPath("//input[@name='newPassword']");
         By Save_Btn = By.XPath("//button[@class='btn btn-primary btn btn-primary']");
-        By Verify_Text = By.XPath("");
+        By Verify_Text = By.XPath("//div[text()='Your password has been changed successfully']");
+        By Close_Btn = By.XPath("//button[text()='Close']");
+
         public ChangePasswordPage(IWebDriver driver) : base(driver)
         {
         }
@@ -42,6 +44,10 @@ namespace AssetManagementScript.PageObject
         public string GetMessageSuccessful()
         {
             return GetText(Verify_Text);
+        }
+        public void ClickClose()
+        {
+            ClickElement(Close_Btn);
         }
     }
 }

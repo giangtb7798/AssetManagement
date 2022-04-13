@@ -13,6 +13,7 @@ namespace AssetManagementScript.PageObject.Constant
         By Admin_Login = By.XPath("//input[@name='username']");
         By Password_Login = By.XPath("//input[@name='password']");
         By Login_btn = By.XPath("//button[@class='btn btn-primary']");
+        By Verify_Text = By.XPath("//div[text()=\"You're Login\"]");
         public UserLoginPage(IWebDriver driver) : base(driver)
         {
         }
@@ -28,5 +29,12 @@ namespace AssetManagementScript.PageObject.Constant
         {
             ClickElement(Login_btn);
         }
+        public string GetMessageSuccessful()
+        {
+            System.Threading.Thread.Sleep(6000);
+            goToUrl("https://group5reactjs.azurewebsites.net/login");
+            return GetText(Verify_Text);
+        }
+
     }
 }

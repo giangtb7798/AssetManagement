@@ -24,25 +24,26 @@ namespace AssetManagementScript.Tests
         {
             // Input Username Password and Click
             UserLoginPage userLoginPage = new UserLoginPage(driver);
-            userLoginPage.UserLogin("huong");
-            userLoginPage.PasswordLogin("Huong1234567");
+            userLoginPage.UserLogin("Huong");
+            userLoginPage.PasswordLogin("Huong");
             userLoginPage.ClickLoginButton();
 
             //Change password
             ChangePasswordPage changePasswordPage = new ChangePasswordPage(driver);
             changePasswordPage.ClickMenuButton();
             changePasswordPage.ClickChangePasswordButton();
-            changePasswordPage.OldPassword("Huong1234567");
-            changePasswordPage.NewPassword("Huong123456");
+            changePasswordPage.OldPassword("Huong");
+            changePasswordPage.NewPassword("Huong123");
             changePasswordPage.ClickSaveButton();
 
             //Verify Change Password Successfully
 
             Assert.That(changePasswordPage.GetMessageSuccessful().Contains("Your password has been changed successfully"), "Password is not able to change");
+            changePasswordPage.ClickClose();
 
             // Input Username Password and Click
-            userLoginPage.UserLogin("huong");
-            userLoginPage.PasswordLogin("Huong123456");
+            userLoginPage.UserLogin("Huong");
+            userLoginPage.PasswordLogin("Huong123");
             userLoginPage.ClickLoginButton();
         }
     }

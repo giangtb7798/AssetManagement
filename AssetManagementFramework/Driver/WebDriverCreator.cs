@@ -25,7 +25,7 @@ namespace AssetManagementFramework.Driver
             }
 
             driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
             return driver;
         }
         public static IWebDriver CreateRemoteDriver(String BrowserName, String OSName)

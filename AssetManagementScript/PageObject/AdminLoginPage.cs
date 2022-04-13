@@ -9,7 +9,7 @@ namespace AssetManagementScript.PageObject.ConstantAdmin
         By Admin_Login = By.XPath("//input[@name='username']");
         By Password_Login = By.XPath("//input[@name='password']");
         By Login_btn = By.XPath("//button[@class='btn btn-primary']");
-        By Verify_Text = By.XPath("//div[text()='Admin Page']");
+        By Verify_Text = By.XPath("//h3[text()='User List']");
         public AdminLoginPage(IWebDriver driver) : base(driver)
         {
         }
@@ -19,15 +19,17 @@ namespace AssetManagementScript.PageObject.ConstantAdmin
         }
         public void PasswordLogin()
         {
-            SendKey(Password_Login, "Admin12345678");
+            SendKey(Password_Login, Configuration.Constant.Password);
         }
         public void ClickLoginButton()
         {
             ClickElement(Login_btn);
+            System.Threading.Thread.Sleep(6000);
         }
         public string GetMessageSuccessful()
         {
             return GetText(Verify_Text);
         }
+
     }
 }

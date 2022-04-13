@@ -8,11 +8,12 @@ namespace AssetManagementScript.Configuration
 {
     public class Constant
     {
-        public static readonly string UserName = "Admin";
-
-        public static readonly string Password = "Admin";
-
         public static readonly string API_URL = "https://rookiesgroup5.azurewebsites.net/";
+
+        public static readonly string UserName = "adming";
+
+        public static readonly string Password = "Giang1234";
+        
 
     }
 }
