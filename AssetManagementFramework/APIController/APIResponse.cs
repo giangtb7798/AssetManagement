@@ -11,14 +11,13 @@ namespace AssetManagementFramework.APIController
         public string responseBody { get; set; }
         public int responseStatusCode { get; set; }
         public string responseStatus { get; set; }
-        public dynamic obj { get; set; }
         public APIResponse(RestResponse response)
         {
             this.response = response;
             GetResponseBody();
             GetresponseStatusCode();
             GetResponseStatus();
-            deserialize();
+            //deserialize();
         }
         private string GetResponseBody()
         {
@@ -43,11 +42,11 @@ namespace AssetManagementFramework.APIController
 
             return responseStatus;
         }
-        private dynamic deserialize()
-        {
-            dynamic result = JsonConvert.DeserializeObject<dynamic>(responseBody);
-            obj = result;
-            return result;
-        }
+        //private dynamic deserialize()
+        //{
+        //    dynamic result = JsonConvert.DeserializeObject<dynamic>(responseBody);
+        //    obj = result;
+        //    return result;
+        //}
     }
 }

@@ -49,7 +49,7 @@ namespace AssetManagementFramework
         {
             HTMLReporter.createNode(TestContext.CurrentContext.Test.ClassName, TestContext.CurrentContext.Test.Name, "test class description here");
             driver = WebDriverCreator.CreateLocalDriver(_browser);
-            driver.Url = "https://group5reactjs.azurewebsites.net/";
+            driver.Url = "https://group2reactjs.azurewebsites.net/";
         }
 
         [TearDown]
@@ -61,7 +61,7 @@ namespace AssetManagementFramework
                 TakeScreenShoot.CaptureScreenshotAndReturnModel(NewPath);
                 HTMLReporter.Fail("Test case: " + TestContext.CurrentContext.Test.Name + " is failed", NewPath);
             }
-            //driver.Quit();
+            //sdriver.Quit();
         }
 
         [OneTimeTearDown]

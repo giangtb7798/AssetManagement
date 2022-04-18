@@ -3,10 +3,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AssetManagementFramework.Driver
 {
@@ -17,15 +14,20 @@ namespace AssetManagementFramework.Driver
             IWebDriver driver = null;
             if (BrowserName.SequenceEqual("firefox"))
             {
-                driver = new FirefoxDriver();
+                FirefoxOptions options = new FirefoxOptions();
+                options.AddArguments(new[] { "--disable-web-security", "--disable-site-isolation-trials" });
+                driver = new FirefoxDriver(options);
             }
             else if (BrowserName.SequenceEqual("chrome"))
             {
-                driver = new ChromeDriver();
+                ChromeOptions options = new ChromeOptions();
+                options.AddArgument("--disable-web-security");
+                options.AddArgument("--disable-blink-features=AutomationControlled");
+                driver = new ChromeDriver(options);
             }
 
             driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             return driver;
         }
         public static IWebDriver CreateRemoteDriver(String BrowserName, String OSName)

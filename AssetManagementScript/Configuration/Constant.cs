@@ -8,12 +8,19 @@ namespace AssetManagementScript.Configuration
 {
     public class Constant
     {
-        public static readonly string API_URL = "https://rookiesgroup5.azurewebsites.net/";
+        //CONVENTION: EVERYNAME CAPITALIZED
+        public static readonly string API_URL = "https://rookiesgroup2.azurewebsites.net/api/";
+        public static readonly string USERNAME_ADMINHN = "gianghn";
+        public static readonly string PASSWORD_ADMINHN = "Giang1234";
 
-        public static readonly string UserName = "adming";
+        public static readonly string USERNAME_ADMINHCM = "daohq";
+        public static readonly string PASSWORD_ADMINHCM = "Rookiesms1";
 
-        public static readonly string Password = "Giang1234";
-        
+        public static readonly string USERNAME_ADMINDN = "dthai";
+        public static readonly string PASSWORD_ADMINDN = "Admin@123";
 
+        public static readonly string LOCATION_HANOI = "Ha noi";
+        public static readonly string LOCATION_HCM = "Ho Chi Minh";
+        public static readonly string LOCATION_DANANG = "Da nang";
     }
 }

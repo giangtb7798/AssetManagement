@@ -1,6 +1,7 @@
 ﻿using AssetManagementFramework.HTMLReport;
 using Newtonsoft.Json;
 using RestSharp;
+using RestSharp.Authenticators;
 using System;
 
 namespace AssetManagementFramework.APIController
@@ -69,6 +70,13 @@ namespace AssetManagementFramework.APIController
             Request.AddJsonBody(obj);
             return this;
         }
+        public APIRequest AddJsonBody(string content)
+        {
+            requestBody = content;
+            Request.AddJsonBody(content);
+            return this;
+        }
+
 
         public APIRequest AddURLSegment(string segment, string data)
         {
@@ -201,6 +209,11 @@ namespace AssetManagementFramework.APIController
                 throw ex;
             }
 
+        }
+        public APIRequest Authentication(string username, string password)
+        {
+            Client.Authenticator = new HttpBasicAuthenticator(username, password);
+            return this;
         }
 
     }
