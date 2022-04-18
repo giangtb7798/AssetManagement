@@ -99,9 +99,8 @@ namespace AssetManagementScript.Tests
             testDriverAction.Login(username, password);
 
             //Create new user
-            Random rnd = new Random();
-            int UsernameRandom = rnd.Next(0, 99999);
-            UserDataObject InputNewUserData = new UserDataObject("Automation" + UsernameRandom, "52", "02/02/1996", "Male", "04/04/2022", "Admin");
+            string UsernameRandom = testDriverAction.RandomString(6);
+            UserDataObject InputNewUserData = new UserDataObject("Automation" + UsernameRandom, "test", "02/02/1996", "Male", "04/04/2022", "Admin");
             CreateNewUserPage createNewUserPage = new(driver);
             testDriverAction.CreateNewUser(InputNewUserData);
             UserDataObject userInputData = createNewUserPage.GetUserInputData();
@@ -109,29 +108,30 @@ namespace AssetManagementScript.Tests
             createNewUserPage.SubmitNewUser();
 
             ////Edit User Page
-            //ManageUserPage manageUserPage = new(driver);
-            //manageUserPage.ClickEditUserByIndex(1);
+            ManageUserPage manageUserPage = new(driver);
+            manageUserPage.ClickEditUserByIndex(1);
 
-            ////Compare UI data with InputData
-            //ManageUserService manageUserService = new ManageUserService();
-            //EditUserPage editUserPage = new(driver);
-            //UserDataObject EditInputData = editUserPage.GetInputData();
-            //string InputNewUserDataSerialized = manageUserService.SerializeData(userInputData);
-            //string EditInputDataSerialized = manageUserService.SerializeData(EditInputData);
+            //Compare UI data with InputData
+            ManageUserService manageUserService = new ManageUserService();
+            EditUserPage editUserPage = new(driver);
+            UserDataObject EditInputData = editUserPage.GetInputData();
+            string InputNewUserDataSerialized = manageUserService.SerializeData(userInputData);
+            string EditInputDataSerialized = manageUserService.SerializeData(EditInputData);
 
-            //Assert.AreEqual(InputNewUserDataSerialized, EditInputDataSerialized, "Input data is not equal with Edit User data UI");
+            Assert.AreEqual(InputNewUserDataSerialized, EditInputDataSerialized, "Input data is not equal with Edit User data UI");
 
-            ////edit user data
-            //UserDataObject editedUserData = new UserDataObject("05/02/1997", "female", "04/12/2022", "staff");
-            //testDriverAction.EditUser(editedUserData);
-            //UserDataObject InputDataForAPITest = editUserPage.GetInputDataForAPITest();
-            //editUserPage.SaveEdit();
+            //edit user data
+            UserDataObject editedUserData = new UserDataObject("female", "04/12/2022", "staff");
+            testDriverAction.EditUser(editedUserData);
+            UserDataObject InputDataForAPITest = editUserPage.GetInputDataForAPITest();
+            editUserPage.SaveEdit();
 
-            ////Compare with API
-            //UserDataObject UserDataAPI = manageUserService.UserDataAPI(_token, manageUserPage.StaffCodeByIndex(1));
-            //string UserDataAPISerialized = manageUserService.SerializeData(UserDataAPI);
-            //string InputDataForAPITestSerialized = manageUserService.SerializeData(InputDataForAPITest);
-            //Assert.AreEqual(InputDataForAPITestSerialized, UserDataAPISerialized, "Edited Input is not equal with API");
+            //Compare with API
+            string test = manageUserPage.StaffCodeByIndex(1);
+            UserDataObject UserDataAPI = manageUserService.UserDataAPI(_token, test);
+            string UserDataAPISerialized = manageUserService.SerializeData(UserDataAPI);
+            string InputDataForAPITestSerialized = manageUserService.SerializeData(InputDataForAPITest);
+            Assert.AreEqual(InputDataForAPITestSerialized, UserDataAPISerialized, "Edited Input is not equal with API");
 
         }
         [Test]
@@ -188,34 +188,33 @@ namespace AssetManagementScript.Tests
 
             //Check new user input data with Top Row User
             ManageUserService manageUserService = new ManageUserService();
-            //UserDataObject UserDisplay = manageUserPage.DisplayRowDataByIndex(1);
-            //string InputUserUISerialized = manageUserService.SerializeData(InputUserUI);
-            //string UserDisplaySerialized = manageUserService.SerializeData(UserDisplay);
-            //Assert.AreEqual(InputUserUISerialized, UserDisplaySerialized, "Input data is inconsistent with first row display data");
+            UserDataObject UserDisplay = manageUserPage.DisplayRowDataByIndex(1);
+            string InputUserUISerialized = manageUserService.SerializeData(InputUserUI);
+            string UserDisplaySerialized = manageUserService.SerializeData(UserDisplay);
+            Assert.AreEqual(InputUserUISerialized, UserDisplaySerialized, "Input data is inconsistent with first row display data");
 
             //Check new user input data with API
-            //UserDataObject UserDataAPI = manageUserService.UserDataAPI(_token, manageUserPage.StaffCodeByIndex(1));
-            //string InputUserAPISerialized = manageUserService.SerializeData(InputUserAPI);
-            //string UserDataAPISerialized = manageUserService.SerializeData(UserDataAPI);
-            //Assert.AreEqual(InputUserAPISerialized, UserDataAPISerialized, "Input data is inconsistent with api data");
+            UserDataObject UserDataAPI = manageUserService.UserDataAPI(_token, manageUserPage.StaffCodeByIndex(1));
+            string InputUserAPISerialized = manageUserService.SerializeData(InputUserAPI);
+            string UserDataAPISerialized = manageUserService.SerializeData(UserDataAPI);
+            Assert.AreEqual(InputUserAPISerialized, UserDataAPISerialized, "Input data is inconsistent with api data");
 
             //Check new user input data with user detail
             manageUserPage.ClickRowByIndex(1);
             UserDataObject userDetailData = manageUserPage.UserDetailData();
+            string InputUserDetailSerialized = manageUserService.SerializeData(InputUserDetail);
+            string UserDetailDataSerialized = manageUserService.SerializeData(userDetailData);
+            Assert.AreEqual(InputUserDetailSerialized, UserDetailDataSerialized, "Input data is inconsistent with user detail data");
+            manageUserPage.CloseUserDetail();
 
-            Console.WriteLine(userDetailData.userName);
-            //string InputUserDetailSerialized = manageUserService.SerializeData(InputUserDetail);
-            //string UserDetailDataSerialized = manageUserService.SerializeData(userDetailData);
-            //Assert.AreEqual(InputUserDetailSerialized, UserDetailDataSerialized, "Input data is inconsistent with user detail data");
-            //manageUserPage.CloseUserDetail();
+            //Logout
+            testDriverAction.Logout();
 
-            ////Logout
-            //testDriverAction.Logout();
-
-            ////Login with newly created account and confirm logged in
-            //testDriverAction.Login(InputNewUserData.userName, InputNewUserData.firstTimePassword);
-            //HomePage homePage = new(driver);
-            //Assert.That(homePage.GetPopupTitle().Equals("Change password"), "User have not logged in yet");
+            //Login with newly created account and confirm logged in
+            testDriverAction.Login(InputNewUserData.userName, InputNewUserData.firstTimePassword);
+            HomePage homePage = new(driver);
+            Console.WriteLine(homePage.GetPopupTitle());
+            Assert.That(homePage.GetPopupTitle().Equals("Change Password"), "User have not logged in yet");
         }
     }
 }

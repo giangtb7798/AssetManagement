@@ -9,7 +9,7 @@ namespace AssetManagementScript.PageObject
         By _ManageAsset = By.XPath("//a[@href='#/assets']");
         By _ManageAssignment = By.XPath("//a[@href='#/assignments']");
         By _MenuUser = By.XPath("//div[@class='ant-breadcrumb']//span[@class='ant-breadcrumb-link']");
-        By _ChangePasswordTitle = By.XPath("//span[contains(text(), 'Change password')]");
+        By _ChangePasswordTitle = By.XPath("//span[contains(text(), 'Change Password')]");
         By _NewPasswordField = By.XPath("//input[@id='ChangePass_Oldpassword']");
         By _NewPasswordConfirmation = By.XPath("//input[@id='ChangePass_Newpassword']");
         By _SaveNewPassword = By.XPath("//span[contains(text(), 'Save')]");

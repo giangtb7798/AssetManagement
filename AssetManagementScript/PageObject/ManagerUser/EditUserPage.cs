@@ -11,25 +11,26 @@ namespace AssetManagementScript.PageObject.ManagerUser
 {
     public class EditUserPage : WebDriverAction
     {
-        By _Firstname = By.XPath("//input[@id='firstName']");
-        By _Lastname = By.XPath("//input[@id='lastName']");
-        By _Dob = By.XPath("//input[@name='dob']");
-        By _Male = By.XPath("//input[@id='male']");
-        By _Female = By.XPath("//input[@id='female']");
-        By _JoinedDate = By.XPath("//input[@name='joinedDate']");
-        By _Admin = By.XPath("//option[contains(text(), 'Admin')]");
-        By _Staff = By.XPath("//option[contains(text(), 'Staff')]");
-        By _SaveChange = By.XPath("//button[contains(text(), 'Save')]");
+        By _Firstname = By.XPath("//input[@id='basic_firstName']");
+        By _Lastname = By.XPath("//input[@id='basic_lastName']");
+        By _Dob = By.XPath("//input[@id='basic_doB']");
+        By _Male = By.XPath("//input[@value='Male']");
+        By _Female = By.XPath("//input[@value='Female']");
+        By _JoinedDate = By.XPath("//input[@id='basic_joinDate']");
+        By _type = By.XPath("//div[@class='ant-select-selector']");
+        By _TypeSelect = By.XPath("//span[@class='ant-select-selection-item']");
+        By _Admin = By.XPath("//div[@class='ant-select-item-option-content' and text()='Admin']");
+        By _Staff = By.XPath("//div[@class='ant-select-item-option-content' and text()='Staff']");
+        By _SaveChange = By.XPath("//span[contains(text(), 'Save')]");
         By _CancelChange = By.XPath("//a[contains(text(), 'Cancel')]");
-        By _SelectValue = By.XPath("//select[@name='isAdmin']");
+        By _SelectValue = By.XPath("//span[@class='ant-select-selection-item']");
 
         public EditUserPage(IWebDriver driver) : base(driver)
         {
 
         }
-        public void EditUser(string Dob, string gender, string joinedDate, string type)
+        public void EditUser(string gender, string joinedDate, string type)
         {
-            EditDOB(Dob);
             EditGender(gender);
             EditJoinedDate(joinedDate);
             EditType(type);
@@ -74,7 +75,7 @@ namespace AssetManagementScript.PageObject.ManagerUser
                 doB = GetInputText(_Dob),
                 gender = GenderOption(),
                 joinDate = GetInputText(_JoinedDate),
-                type = ReplaceType(),
+                type = SelectedDropdownText(_TypeSelect),
             };
             return userDataObject;
         }
@@ -112,16 +113,19 @@ namespace AssetManagementScript.PageObject.ManagerUser
         {
             if (input.ToLower() == "admin")
             {
+                ClickElement(_type);
                 ClickElement(_Admin);
             }
             else if (input.ToLower() == "staff")
             {
+                ClickElement(_type);
                 ClickElement(_Staff);
             }
         }
         public void SaveEdit()
         {
             ClickElement(_SaveChange);
+            Wait(10000);
         }
         public void CancelEdit()
         {

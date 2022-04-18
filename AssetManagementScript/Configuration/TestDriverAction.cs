@@ -46,7 +46,7 @@ namespace AssetManagementScript.Configuration
         public void EditUser(UserDataObject user)
         {
             EditUserPage editUserPage = new(driver);
-            editUserPage.EditUser(user.doB, user.gender, user.joinDate, user.type);
+            editUserPage.EditUser(user.gender, user.joinDate, user.type);
         }
         public string RandomString(int length)
         {

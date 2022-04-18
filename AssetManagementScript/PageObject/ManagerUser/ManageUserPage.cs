@@ -36,9 +36,9 @@ namespace AssetManagementScript.PageObject.ManagerUser
         By _GenderDetail = By.XPath("//table[@class='UserListPage_shuModal__3wtxD']//tr[5]//td[2]");
         By _TypeDetail = By.XPath("//table[@class='UserListPage_shuModal__3wtxD']//tr[6]//td[2]");
         By _LocationDetail = By.XPath("//input[@placeholder='Location']");
-        By _CloseDetailBtn = By.XPath("//button[contains(text(), 'Close')]");
+        By _CloseDetailBtn = By.XPath("//button[@aria-label='Close']");
 
-        string _EditUserBtn = "(//td[count(//th[.='Type ']/preceding-sibling::th)+2]/span/a){0}";
+        string _EditUserBtn = "//tr{0}//td[6]//div//span[@aria-label='edit']";
         string _DisableUserBtn = "(//*[name()='svg'][@class='deleteUserIcon']){0}";
         By _ConfirmDisableUser = By.XPath("//span[text()='Disable']");
 
@@ -143,6 +143,7 @@ namespace AssetManagementScript.PageObject.ManagerUser
         {
             string staffcode = string.Format(_StaffCode, "[" + index + "]");
             ClickElement(By.XPath(staffcode));
+            Wait(3000);
         }
 
         public void CloseUserDetail()
@@ -153,6 +154,7 @@ namespace AssetManagementScript.PageObject.ManagerUser
         {
             string edituser = string.Format(_EditUserBtn, "[" + index + "]");
             ClickElement(By.XPath(edituser));
+            Wait(3000);
         }
         public void ClickDisableUser(int index)
         {
@@ -182,8 +184,8 @@ namespace AssetManagementScript.PageObject.ManagerUser
         {
             UserDataObject data = new UserDataObject
             {
-                fullName = GetText(_FullnameDetail),
                 userName = GetText(_UsernameDetail),
+                fullName = GetText(_FullnameDetail),               
                 doB = GetText(_DOB),
                 gender = GetText(_GenderDetail),
                 type = GetText(_TypeDetail),

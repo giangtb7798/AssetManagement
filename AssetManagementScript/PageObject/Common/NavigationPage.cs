@@ -12,9 +12,9 @@ namespace AssetManagementScript.PageObject
     {
         By _ManageUser = By.XPath("//a[@href='/users']");
         By _ManageAsset = By.XPath("//a[@href='/assets']");
-        By _UserDropdown = By.XPath("//a[@id='basic-nav-dropdown']");
-        By _Logout = By.XPath("//a[@id='basic-nav-dropdown']/following-sibling::div//a[contains(text(),' Log out')]");
-        By _LogoutCf = By.XPath("//button[contains(text(), 'Log out')]");
+        By _UserDropdown = By.XPath("//span[@class='ant-dropdown-trigger ant-dropdown-link']");
+        By _Logout = By.XPath("//a[@href='#/users' and text()='Logout']");
+        By _LogoutCf = By.XPath("//span[contains(text(), 'Log out')]");
 
 
         public NavigationPage(IWebDriver driver) : base(driver)
@@ -31,12 +31,14 @@ namespace AssetManagementScript.PageObject
         }
         public void UserDropdown()
         {
-            ClickElement(_UserDropdown);
+            HoverElement(_UserDropdown);
+            Wait(1000);
         }
         public void Logout()
         {
             UserDropdown();
             ClickElement(_Logout);
+            Wait(1000);
             ClickElement(_LogoutCf);
 
         }

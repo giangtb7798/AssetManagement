@@ -51,9 +51,8 @@ namespace AssetManagementScript.DTO
         {
 
         }
-        public UserDataObject(string dob, string gender, string joinedDate, string type)
+        public UserDataObject(string gender, string joinedDate, string type)
         {
-            this.doB = dob;
             this.gender = gender;
             this.joinDate = joinedDate;
             this.type = type;

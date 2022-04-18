@@ -76,7 +76,7 @@ namespace AssetManagementScript.PageObject.ManagerUser
                 userName = GetInputText(_Firstname).ToLower() + GetInputText(_Lastname).ToLower()[0],
                 doB = GetInputText(_Dob),
                 gender = GenderOption(),
-                type = GetInputText(_Type),
+                type = SelectedDropdownText(_TypeSelect),
             };
             return user;
         }
