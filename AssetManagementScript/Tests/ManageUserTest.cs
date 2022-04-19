@@ -40,37 +40,38 @@ namespace AssetManagementScript.Tests
 
             //Compare UI with API
             ManageUserPage manageUserPage = new(driver);
-            int TotalRow = manageUserPage.StateList().Count;
             ManageUserService manageUserService = new ManageUserService();
-            for (int i = 0; i < TotalRow; i++)
+            List<UserDataObject> viewUserList = manageUserPage.GetViewUserList();
+            List<UserDataObject> viewUserListAPI = manageUserService.GetListUserDataAPI(_token);
+            for (int i = 0; i < viewUserList.Count; i++)
             {
-                string userListByIndex = manageUserService.SerializeData(manageUserPage.UserListByIndex(i + 1));
-                string userListAPIByIndex = manageUserService.SerializeData(manageUserService.GetUserDataByIndex(_token, i));
-                Assert.That(userListByIndex, Is.EqualTo(userListAPIByIndex), "User List from UI is different with API");
+                string viewUserListSerialized = manageUserService.SerializeData(viewUserList);
+                string viewUserListAPISerialized = manageUserService.SerializeData(viewUserListAPI);
+                Assert.AreEqual(viewUserListSerialized, viewUserListAPISerialized, "View User List is inconsistent with list API user response");
             }
 
             //input Staff code Search
-            manageUserPage.InputSeachBox("SD0001");
+            manageUserPage.InputSeachBox(viewUserList[0].code);
 
             //Check Staff Code Search
             List<string> listStaffCode = manageUserPage.StaffCodeList();
-            Assert.That(listStaffCode.Contains("SD0001"), "No such user with input Staffcode condition");
+            Assert.That(listStaffCode.Contains(viewUserList[0].code), "No such user with input Staffcode condition");
             manageUserPage.ClearSearch();
 
             //Input User name search
-            manageUserPage.InputSeachBox("nghialt");
+            manageUserPage.InputSeachBox(viewUserList[0].userName);
 
             //Check User name result
             List<string> listUsername = manageUserPage.UserNameList();
-            Assert.That(listUsername.Contains("nghialt"), "No such user with input Username condition");
+            Assert.That(listUsername.Contains(viewUserList[0].userName), "No such user with input Username condition");
             manageUserPage.ClearSearch();
 
             //Input Full name search
-            manageUserPage.InputSeachBox("Nghia Le Trung");
+            manageUserPage.InputSeachBox(viewUserList[0].fullName);
 
             //Check Full name result
             List<string> listFullname = manageUserPage.FullNameList();
-            Assert.That(listFullname.Contains("Nghia Le Trung"), "No such user with input full name condition");
+            Assert.That(listFullname.Contains(viewUserList[0].fullName), "No such user with input full name condition");
             manageUserPage.ClearSearch();
 
             //Check State of displayed user: Admin

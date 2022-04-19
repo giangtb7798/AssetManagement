@@ -204,5 +204,24 @@ namespace AssetManagementScript.PageObject.ManagerUser
             };
             return data;
         }
+        public List<UserDataObject> GetViewUserList()
+        {
+            List<UserDataObject> list = new List<UserDataObject>();
+            for (int x = 1; x <= StaffCodeList().Count; x++)
+            {
+                Wait(2000);
+                UserDataObject data = new UserDataObject
+                {
+                    code = StaffCodeByIndex(x),
+                    fullName = FullNameByIndex(x),
+                    userName = UsernameByIndex(x),
+                    joinDate = JoinedDateByIndex(x),
+                    type = TypeByIndex(x),
+                };
+                list.Add(data);
+
+            }
+            return list;
+        }
     }
 }

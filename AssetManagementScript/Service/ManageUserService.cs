@@ -110,7 +110,24 @@ namespace AssetManagementScript.Service
 
             return data;
         }
-
+        public List<UserDataObject> GetListUserDataAPI(string token)
+        {
+            List<UserDataObject> list = new List<UserDataObject>();
+            for (int x = 0; x < UserDetailData(token).items.Count; x++)
+            {
+                UserDataObject var = UserDetailData(token).items[x];
+                UserDataObject data = new UserDataObject
+                {
+                    code = var.code.Trim(),
+                    fullName = var.firstName.Trim() + " " +  var.lastName.Trim(),
+                    userName = var.userName.Trim(),
+                    joinDate = ConvertInputDate(var.joinDate).Trim(),
+                    type = var.type.Trim()
+                };
+                list.Add(data);
+            }
+            return list;
+        }
         public string ConvertDoB(string token, string userid)
         {
             DateTime asDate = DateTime.ParseExact(UserDetailData(token, userid).doB,

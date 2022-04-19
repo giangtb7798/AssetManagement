@@ -1,5 +1,6 @@
 ﻿using AssetManagementScript.DTO;
 using AssetManagementScript.PageObject;
+using AssetManagementScript.PageObject.ManageAsset;
 using AssetManagementScript.PageObject.ManagerUser;
 using OpenQA.Selenium;
 using System;
@@ -33,6 +34,20 @@ namespace AssetManagementScript.Configuration
             createNewUserPage.CreateNewUSer(user.firstName, user.lastName, user.doB, user.gender, user.joinDate, user.type);
 
         }
+        public void CreateNewAsset(AssetDataObject asset)
+        {
+            //Click Manage User Tab
+            HomePage homePage = new(driver);
+            homePage.ManageAsset();
+
+            //Click add asset button
+            ManageAssetPage manageAssetPage = new(driver);
+            manageAssetPage.CreateNewAsset();
+
+            //Create new Asset
+            CreateNewAssetPage createNewAssetPage = new(driver);
+            createNewAssetPage.CreateNewAsset(asset.assetName, asset.categoryName, asset.specification, asset.installedDate, asset.state);
+        }
         public void Login(string username, string password)
         {
             LoginPage loginPage = new(driver);
@@ -47,6 +62,11 @@ namespace AssetManagementScript.Configuration
         {
             EditUserPage editUserPage = new(driver);
             editUserPage.EditUser(user.gender, user.joinDate, user.type);
+        }
+        public void EditAsset(AssetDataObject asset)
+        {
+            EditAssetPage editAssetPage = new(driver);
+            editAssetPage.EditAsset(asset.assetName, asset.specification, asset.installedDate, asset.state);
         }
         public string RandomString(int length)
         {

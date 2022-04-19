@@ -24,6 +24,7 @@ namespace AssetManagementScript.PageObject
         public void ManageAsset()
         {
             ClickElement(_ManageAsset);
+            Wait(6000);
         }
         public void ManageAssignment()
         {
