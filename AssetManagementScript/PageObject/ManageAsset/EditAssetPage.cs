@@ -102,7 +102,7 @@ namespace AssetManagementScript.PageObject.ManageAsset
             }
             else if (CheckSelectBox(_StateNotAvailable))
             {
-                return var = "Not Available";
+                return var = "Not available";
             }
             else if (CheckSelectBox(_StateWaitingForRecycling))
             {
