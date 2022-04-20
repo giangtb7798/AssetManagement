@@ -139,7 +139,7 @@ namespace AssetManagementScript.Tests
             testDriverAction.Login(username, password);
 
             //Input User data 
-            AssetDataObject InputAsset = new AssetDataObject("Dell G5 69", "Laptop", "Day la laptop cua a Dao", "02/05/2022", "Available");
+            AssetDataObject InputAsset = new AssetDataObject("Dell G5 69", "Laptop", "Day la laptop cua a giang", "02/05/2022", "Available");
             CreateNewAssetPage createNewAssetPage = new(driver);
             testDriverAction.CreateNewAsset(InputAsset);
             createNewAssetPage.SaveAsset();
@@ -157,7 +157,7 @@ namespace AssetManagementScript.Tests
             Assert.AreEqual(InputAssetSerialized, AssetInputForUISerialized);
 
             //Edit Asset info
-            AssetDataObject inputEditAsset = new AssetDataObject("Iphone13", "haha", "08/04/2022", "Not Available");
+            AssetDataObject inputEditAsset = new AssetDataObject("Iphone13", "haha", "08/04/2022", "NotAvailable");
             testDriverAction.EditAsset(inputEditAsset);
             AssetDataObject AssetEditedInputForDetail = editAssetPage.GetAssetInputForAssetDetail();
             editAssetPage.SaveEdit();
@@ -181,38 +181,38 @@ namespace AssetManagementScript.Tests
             testDriverAction.Login(username, password);
 
             //Input User data 
-            AssetDataObject InputAsset = new AssetDataObject("Dell G5 69", "Laptop", "Day la laptop cua a Dao", "02/05/2022", "Available");
+            AssetDataObject InputAsset = new AssetDataObject("Dell G5 69", "Laptop", "Day la laptop cua a giang", "02/05/2022", "Available");
             CreateNewAssetPage createNewAssetPage = new(driver);
-            //testDriverAction.CreateNewAsset(InputAsset);
-            //createNewAssetPage.SaveAsset();
+            testDriverAction.CreateNewAsset(InputAsset);
+            createNewAssetPage.SaveAsset();
 
-            ////Delete Asset with Available state
+            //Delete Asset with Available state
             ManageAssetPage manageAssetPage = new ManageAssetPage(driver);
-            //string recentCreatedAssetCode = manageAssetPage.AssetCodeByIndex(1);
-            //manageAssetPage.DeleteAssetByIndex(1);
-            //manageAssetPage.ConfirmDeleteAsset();
+            string recentCreatedAssetCode = manageAssetPage.AssetCodeByIndex(1);
+            manageAssetPage.DeleteAssetByIndex(1);
+            manageAssetPage.ConfirmDeleteAsset();
 
-            ////Check if deleted asset unavailable
-            //manageAssetPage.InputSeachBox(recentCreatedAssetCode + " ");
-            //Assert.That(manageAssetPage.FindNoElements1(recentCreatedAssetCode), "Deleted Asset still available in the UI, please try to find error");
-            //manageAssetPage.ClearSearch();
+            //Check if deleted asset unavailable
+            manageAssetPage.InputSeachBox(recentCreatedAssetCode + " ");
+            Assert.That(manageAssetPage.FindNoElements1(recentCreatedAssetCode), "Deleted Asset still available in the UI, please try to find error");
+            manageAssetPage.ClearSearch();
 
-            //// <-------------------- Not Available State ------------------------------------->
+            // <-------------------- Not Available State ------------------------------------->
 
-            ////Input User data 
-            //AssetDataObject InputAsset2 = new AssetDataObject("Dell G5 69", "Laptop", "Day la laptop cua a Giang", "02/05/2022", "Not Available");
-            //testDriverAction.CreateNewAsset(InputAsset2);
-            //createNewAssetPage.SaveAsset();
+            //Input User data 
+            AssetDataObject InputAsset2 = new AssetDataObject("Dell G5 69", "Laptop", "Day la laptop cua a Giang", "02/05/2022", "Not Available");
+            testDriverAction.CreateNewAsset(InputAsset2);
+            createNewAssetPage.SaveAsset();
 
-            ////Delete Asset with Not Available state
-            //string recentCreatedAssetCode2 = manageAssetPage.AssetCodeByIndex(1);
-            //manageAssetPage.DeleteAssetByIndex(1);
-            //manageAssetPage.ConfirmDeleteAsset();
+            //Delete Asset with Not Available state
+            string recentCreatedAssetCode2 = manageAssetPage.AssetCodeByIndex(1);
+            manageAssetPage.DeleteAssetByIndex(1);
+            manageAssetPage.ConfirmDeleteAsset();
 
-            //// Check if deleted asset unavailable
-            //manageAssetPage.InputSeachBox(recentCreatedAssetCode2 + " ");
-            //Assert.That(manageAssetPage.FindNoElements1(recentCreatedAssetCode), "Deleted Asset still available in the UI, please try to find error");
-            //manageAssetPage.ClearSearch();
+            // Check if deleted asset unavailable
+            manageAssetPage.InputSeachBox(recentCreatedAssetCode2 + " ");
+            Assert.That(manageAssetPage.FindNoElements1(recentCreatedAssetCode), "Deleted Asset still available in the UI, please try to find error");
+            manageAssetPage.ClearSearch();
 
             // <-------------------- Waiting for recycling ------------------------------------->
 
@@ -233,9 +233,8 @@ namespace AssetManagementScript.Tests
             manageAssetPage.ConfirmDeleteAsset();
 
             // Check if deleted asset unavailable
-            manageAssetPage.SelectStateByText("Waiting for recycling");
             manageAssetPage.InputSeachBox(recentCreatedAssetCode3 + " ");
-            Assert.That(manageAssetPage.FindNoElements(), "Deleted Asset still available in the UI, please try to find error");
+            Assert.That(manageAssetPage.FindNoElements1(recentCreatedAssetCode3), "Deleted Asset still available in the UI, please try to find error");
             manageAssetPage.ClearSearch();
 
             // <-------------------- Recycled ------------------------------------->
@@ -255,17 +254,9 @@ namespace AssetManagementScript.Tests
             manageAssetPage.ConfirmDeleteAsset();
 
             // Check if deleted asset unavailable
-            manageAssetPage.SelectStateByText("Recycled");
             manageAssetPage.InputSeachBox(recentCreatedAssetCode4 + " ");
-            Assert.That(manageAssetPage.FindNoElements(), "Deleted Asset still available in the UI, please try to find error");
+            Assert.That(manageAssetPage.FindNoElements1(recentCreatedAssetCode4), "Deleted Asset still available in the UI, please try to find error");
             manageAssetPage.ClearSearch();
-
-            // <-------------------- Historical Assignment: Not Available State (Not implement yet)------------------------------------->
-
-            manageAssetPage.SelectStateByText("State");
-            manageAssetPage.InputSeachBox("CS000002"); // this should be changed to completed asset.
-            manageAssetPage.DeleteAssetByIndex(1);
-            Assert.That(manageAssetPage.HistoricalAssetWarning().Equals("Cannot Delete Asset"), "Cannot delete asset Popup does not show up, please try to find error with this asset");
 
 
         }

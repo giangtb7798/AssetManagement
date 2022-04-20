@@ -12,14 +12,14 @@ namespace AssetManagementScript.PageObject.ManageAsset
 {
     public class EditAssetPage : WebDriverAction
     {
-        By _Name = By.XPath("//input[@id='asset-edit-input-name']");
-        By _Category = By.XPath("//select[@id='asset-edit-input-category']/option");
-        By _Specification = By.XPath("//textarea[@id='asset-edit-input-specification']");
-        By _InstallDate = By.XPath("//input[@id='asset-edit-input-install-date']");
-        By _StateAvailable = By.XPath("//input[@id='asset-add-input-state-available']");
-        By _StateNotAvailable = By.XPath("//input[@id='asset-add-input-state-not-available']");
-        By _StateWaitingForRecycling = By.XPath("//div[@class='ant-space-item'][3]//span[@class='ant-radio']");
-        By _StateRecycled = By.XPath("(//input[@id='asset-add-input-state-not-available'])[2]");
+        By _Name = By.XPath("//input[@id='basic_assetName']");
+        By _Category = By.XPath("//input[@id='basic_categoryName']");
+        By _Specification = By.XPath("//textarea[@id='basic_specification']");
+        By _InstallDate = By.XPath("//input[@id='basic_installedDate']");
+        By _StateAvailable = By.XPath("//input[@value='Available']");
+        By _StateNotAvailable = By.XPath("//input[@value='NotAvailable']");
+        By _StateWaitingForRecycling = By.XPath("//input[@value='WaitingForRecycling']");
+        By _StateRecycled = By.XPath("//input[@value='Recycled']");
         By _SaveButton = By.XPath("//button[@type='submit']");
 
         public EditAssetPage(IWebDriver driver) : base(driver)
@@ -51,7 +51,7 @@ namespace AssetManagementScript.PageObject.ManageAsset
             {
                 ClickElement(_StateAvailable);
             }
-            else if (input.ToLower() == "not available")
+            else if (input.ToLower() == "notavailable")
             {
                 ClickElement(_StateNotAvailable);
             }
@@ -71,9 +71,9 @@ namespace AssetManagementScript.PageObject.ManageAsset
             {
 
                 assetName = GetInputText(_Name),
-                categoryName = GetText(_Category),
+                categoryName = GetInputText(_Category),
                 specification = GetInputText(_Specification),
-                installedDate = ReplaceDateValue(),
+                installedDate = GetInputText(_InstallDate),
                 state = ReplaceState(),
 
             };
@@ -86,7 +86,7 @@ namespace AssetManagementScript.PageObject.ManageAsset
             {
 
                 assetName = GetInputText(_Name),
-                categoryName = GetText(_Category),
+                categoryName = GetInputText(_Category),
                 specification = GetInputText(_Specification),
                 state = ReplaceState(),
 
@@ -117,6 +117,7 @@ namespace AssetManagementScript.PageObject.ManageAsset
         public void SaveEdit()
         {
             ClickElement(_SaveButton);
+            Wait(6000);
         }
         public string ReplaceDateValue()
         {

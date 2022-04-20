@@ -17,8 +17,11 @@ namespace AssetManagementScript.PageObject.ManageAsset
         By _StateSelect = By.XPath("//div[@style='margin-bottom: 0px;'][1]");
         By _CategorySelect = By.XPath("//div[@style='margin-bottom: 0px;']");
         By _ClearState = By.XPath("//span[@class='ant-select-clear']");
+        By _StateAvailable = By.XPath("//input[@id='asset-add-input-state-available']");
         By _StateNotAvailable = By.XPath("//div[@class='ant-select-item-option-content' and text()='Not available']");
         By _StateDefault = By.XPath("//div/select/option[text()='State']");
+        By _StateWaitingForRecycling = By.XPath("//div[@class='ant-select-item-option-content' and text()='Waiting for recycling']");
+        By _StateRecycled = By.XPath("//div[@class='ant-select-item-option-content' and text()='Recycled']");
         By _CategoryLaptop = By.XPath("//div[@class='ant-select-item-option-content' and text()='Laptop']");
         By _CategoryDefault = By.XPath("//div/select/option[text()='Category']");
         By _StateFilter = By.XPath("(//select[@class='form-control'])[1]");
@@ -69,6 +72,7 @@ namespace AssetManagementScript.PageObject.ManageAsset
             string delete = string.Format(_DeletetAssetBtn, "[" + index + "]");
             WaitUntil(By.XPath(delete));
             ClickElement(By.XPath(delete));
+            Wait(2000);
         }
         public void DeleteAssetByIndex(int index)
         {
@@ -166,10 +170,10 @@ namespace AssetManagementScript.PageObject.ManageAsset
         {
             AssetDataObject assetDataObject = new AssetDataObject
             {
-                assetName = GetInputText(By.XPath(string.Format(_AssetDetail, "[" + 2 + "]"))),
-                categoryName = GetInputText(By.XPath(string.Format(_AssetDetail, "[" + 5 + "]"))),
-                specification = GetInputText(By.XPath(string.Format(_AssetDetail, "[" + 4 + "]"))),
-                state = GetInputText(By.XPath(string.Format(_AssetDetail, "[" + 6 + "]"))),
+                assetName = GetText(By.XPath(string.Format(_AssetDetail, "[" + 2 + "]"))),
+                categoryName = GetText(By.XPath(string.Format(_AssetDetail, "[" + 3 + "]"))),
+                specification = GetText(By.XPath(string.Format(_AssetDetail, "[" + 4 + "]"))),
+                state = GetText(By.XPath(string.Format(_AssetDetail, "[" + 6 + "]"))),
             };
             return assetDataObject;
         }
@@ -214,12 +218,33 @@ namespace AssetManagementScript.PageObject.ManageAsset
         public void SelectStateByText(string input)
         {
             WaitUntil(By.XPath(string.Format(_State, "")));
-            SelectText(_StateFilter, input);
-
+            ClickElement(_StateSelect);
+            State(input);
+            Wait(500);
         }
         public string HistoricalAssetWarning()
         {
             return GetText(_DeleteAssetWarningTitle);
+        }
+        public void State(string input)
+        {
+
+            if (input.ToLower() == "available")
+            {
+                ClickElement(_StateAvailable);
+            }
+            else if (input.ToLower() == "not available")
+            {
+                ClickElement(_StateNotAvailable);
+            }
+            else if (input.ToLower() == "waiting for recycling")
+            {
+                ClickElement(_StateWaitingForRecycling);
+            }
+            else if (input.ToLower() == "recycled")
+            {
+                ClickElement(_StateRecycled);
+            }
         }
     }
 }
